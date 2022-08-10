@@ -34,6 +34,10 @@ def go(args):
     # Convert last_review to datetime
     prices_df['last_review'] = pd.to_datetime(prices_df['last_review'])
     logger.info("Fixing column data types")
+
+    idx = prices_df['longitude'].between(-74.25, -73.50) & prices_df['latitude'].between(40.5, 41.2)
+    prices_df = prices_df[idx].copy()
+    logger.info("Removed data outside of NYC")
     
     filename = "clean_sample.csv"
     
